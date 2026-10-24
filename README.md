@@ -28,4 +28,4 @@ indicating an improvement in the model's predictions
 ## Visualizations
 | Visualization 1 | Visualization 2 |
 | :---: | :---: |
-| <img src="./screenshots/plot1.png" width="500"> | <img src="./screenshots/plot2.png" width="500"> |
+| <img src="./screenshots/mse_reduction_gradient_descent.png" width="500"> | <img src="./screenshots/m_and_b_changes_gradient_descent.png" width="500"> |
