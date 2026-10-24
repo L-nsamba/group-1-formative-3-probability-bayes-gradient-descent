@@ -1,7 +1,15 @@
 ## Formative 3 - Probability Distributions, Bayesian Probability, and Gradient Descent Implementation
+## Part 1: Probability Distributions 
+
+<br></br>
+
+## Part 2: Bayesian Probability
+
+<br></br>
+
 ## Part 3 : Gradient Descent 
 
-## [View the Jupyter Notebook](https://colab.research.google.com/drive/1I9rasJMWwKXod7UBxlvfI1thS5Rpq972?usp=sharing)
+## [View the Gradient Descent Code in Jupyter Notebook](https://colab.research.google.com/drive/1I9rasJMWwKXod7UBxlvfI1thS5Rpq972?usp=sharing)
 
 ## Overview
 Implemented linear regression with two input features and applied gradient
