@@ -22,8 +22,7 @@ descent to optimize the model's weights and bias.
 - Used SciPy to approximate derivates and Matplotlib to visualize the results
 
 ## Results 
-The MSE decreased from 61.00 initially to 2.39 after three updates,
-indicating an improvement in the model's predictions
+We implemented gradient descent to optimize the weights (m1, m2) and per-observation biases (b1, b2) of a linear regression model over three iterations. The MSE fell at every update, from 61.00 to 6.50, 2.50 and finally 2.16, so the parameters moved in a direction that reduces the error. The final values were m = [-1.37, 1.10] and b = [1.04, 0.90], giving predictions of [2.95, 6.38] against actual values of [5, 6]. The chain-rule gradients matched SciPy's numerical derivatives at each iteration.
 
 ## Visualizations
 | Visualization 1 | Visualization 2 |
