@@ -4,7 +4,7 @@
 
 ## Part 1: Probability Distributions
 
-## [View the EM Code in Jupyter Notebook](./notebooks/Part_1_Probability_Distribution.ipynb)
+## [View the EM Code in Jupyter Notebook](.https://colab.research.google.com/drive/1AvymL2H9MUXd1iaLN17oh25Skc9zfwBD?usp=sharing)
 
 ## Overview
 Used the Expectation-Maximization (EM) algorithm to separate one unlabeled pile of heights into two hidden Gaussian groups: **mothers** and **sons** from the Galton Families dataset. The algorithm is written from scratch with NumPy, with no `sklearn`. The group labels are never passed to the model. They are only used at the end to score the result.
