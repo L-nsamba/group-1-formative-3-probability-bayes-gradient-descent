@@ -71,7 +71,7 @@ EM can only recover the groups as well as the two bell curves allow. Mothers and
 
 ## Part 2: Bayesian Probability
 
-## [View the Bayesian Probability Code in Jupyter Notebook](https://colab.research.google.com/drive/1gjpdRFj4dctJNPjS5bIJ8nawfWVyo_-F)
+## [View the Bayesian Probability Code in Jupyter Notebook](https://colab.research.google.com/drive/1jkqEGgQXTiHSNpkux7VOvM2MOEFgZg3n)
 
 ## Overview
 Used Bayes’ Theorem to estimate the probability that an IMDB review is negative, given that it contains one of eight selected keywords: **favorite**, **excellent**, **wonderful**, **masterpiece**, **horrible**, **boring**, **worst**, or **sucks**. The analysis uses 50,000 labeled reviews and calculates the prior, likelihood, marginal probability, and posterior for each keyword.
