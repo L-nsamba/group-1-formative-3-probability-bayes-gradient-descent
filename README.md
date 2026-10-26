@@ -71,10 +71,10 @@ EM can only recover the groups as well as the two bell curves allow. Mothers and
 
 ## Part 2: Bayesian Probability
 
-## [View the Bayesian Probability Code in Jupyter Notebook](https://colab.research.google.com/drive/1gjpdRFj4dctJNPjS5bIJ8nawfWVyo_-F)
+## [View the Bayesian Probability Code in Jupyter Notebook](https://colab.research.google.com/drive/1jkqEGgQXTiHSNpkux7VOvM2MOEFgZg3n)
 
 ## Overview
-Used Bayes’ Theorem to estimate the probability that an IMDB review is negative, given that it contains one of four selected negative keywords: **horrible**, **boring**, **worst**, or **sucks**. The analysis uses 50,000 labeled reviews and calculates the prior, likelihood, marginal probability, and posterior for each keyword.
+Used Bayes’ Theorem to estimate the probability that an IMDB review is negative, given that it contains one of eight selected keywords: **favorite**, **excellent**, **wonderful**, **masterpiece**, **horrible**, **boring**, **worst**, or **sucks**. The analysis uses 50,000 labeled reviews and calculates the prior, likelihood, marginal probability, and posterior for each keyword.
 
 ## Implementation
 - Loaded the IMDB review dataset and prepared each review for exact keyword matching.
@@ -86,12 +86,17 @@ Used Bayes’ Theorem to estimate the probability that an IMDB review is negativ
 - Visualized the prior-to-posterior change and compared likelihood with posterior. The calculations use basic Python; Matplotlib is used for the charts.
 
 ## Results
-| Keyword | Prior | Likelihood P(keyword \| Negative) | Marginal P(keyword) | Posterior P(Negative \| keyword) |
-| :--- | ---: | ---: | ---: | ---: |
-| horrible | 0.5000 | 0.0708 | 0.0419 | 0.8449 |
-| boring | 0.5000 | 0.0983 | 0.0610 | 0.8064 |
-| worst | 0.5000 | 0.1608 | 0.0886 | 0.9076 |
-| sucks | 0.5000 | 0.0190 | 0.0108 | 0.8764 |
+Bayesian probability results for selected keywords:
+| keyword | prior | likelihood | marginal | posterior | direct check |
+|---------|-------|------------|----------|-----------|--------------|
+| favorite | 0.5000 | 0.0208 | 0.0424 | 0.2455 | 0.2455 |
+| excellent | 0.5000 | 0.0274 | 0.0710 | 0.1927 | 0.1927 |
+| wonderful | 0.5000 | 0.0209 | 0.0555 | 0.1880 | 0.1880 |
+| masterpiece | 0.5000 | 0.0130 | 0.0240 | 0.2700 | 0.2700 |
+| horrible | 0.5000 | 0.0708 | 0.0419 | 0.8449 | 0.8449 |
+| boring | 0.5000 | 0.0983 | 0.0610 | 0.8064 | 0.8064 |
+| worst | 0.5000 | 0.1608 | 0.0886 | 0.9076 | 0.9076 |
+| sucks | 0.5000 | 0.0190 | 0.0108 | 0.8764 | 0.8764 |
 
 The direct-count check matched the Bayes posterior for each keyword. For example, `P(worst | Negative)` is 0.1608, while `P(Negative | worst)` is 0.9076. These are different conditional probabilities: the first asks how often “worst” appears in negative reviews; the second asks how often a review is negative when it contains “worst.” The prior and marginal connect these quantities in Bayes’ Theorem.
 
@@ -102,12 +107,12 @@ The likelihood-versus-posterior chart highlights that `P(keyword | Negative)` an
 
 | Visualization 1 | Visualization 2 |
 | :---: | :---: |
-| <img src="./screenshots/prior_and_posterior_probabilities.png" width="500"> | <img src="./screenshots/Likelihood_and_Posterior_probabilities_difference.png" width="500"> |
+| <img src="./screenshots/prior_and_posterior_probabilities1.png" width="500"> | <img src="./screenshots/Likelihood_and_Posterior_probabilities_difference1.png" width="500"> |
 
 ## Keyword Rationale
-We selected **horrible**, **boring**, **worst**, and **sucks** because they express negative judgment in different ways: a strong evaluation, a reaction to the experience, a comparison, and an informal criticism. 
+We selected **favorite**, **excellent**, **wonderful**, **masterpiece**, **horrible**, **boring**, **worst**, and **sucks** because they express judgment in different ways: a strong evaluation, a reaction to the experience, a comparison, and an informal criticism. 
 
-This gives us a range of negative signals rather than four near-synonyms. Because matching is exact, related forms such as “sucked” are not counted.
+This gives us a range of signals rather than four near-synonyms. Because matching is exact, related forms such as “sucked” are not counted.
 
 ## Limitations
 These results describe associations in this dataset, not proof that a keyword causes negative sentiment.
