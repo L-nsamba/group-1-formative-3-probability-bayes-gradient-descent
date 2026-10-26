@@ -1,5 +1,71 @@
 ## Formative 3 - Probability Distributions, Bayesian Probability, and Gradient Descent Implementation
-## Part 1: Probability Distributions 
+
+<br></br>
+
+## Part 1: Probability Distributions
+
+## [View the EM Code in Jupyter Notebook](https://colab.research.google.com/drive/1AvymL2H9MUXd1iaLN17oh25Skc9zfwBD?usp=sharing)
+
+## Overview
+Used the Expectation-Maximization (EM) algorithm to separate one unlabeled pile of heights into two hidden Gaussian groups: **mothers** and **sons** from the Galton Families dataset. The algorithm is written from scratch with NumPy, with no `sklearn`. The group labels are never passed to the model. They are only used at the end to score the result.
+
+We compared mothers with sons only. Heights of all children together are bimodal (sons and daughters), which breaks the assumption that each group is a single bell curve.
+
+## Implementation
+- Loaded the dataset and kept **one row per family** for the mother. The file has one row per child, so a mother would otherwise be counted once for every child and the parent group would get too much weight.
+- Pooled the 205 mothers and 481 sons into a single array of 686 heights.
+- **Initialization:** means at the 25th and 75th percentiles of the pooled data, both variances set to the pooled variance, and π₁ = π₂ = 0.5.
+- **E-step:** computed the responsibility of each component for every height with Bayes' theorem, `r_ik = π_k · N(x_i | μ_k, σ_k²) / Σ_j π_j · N(x_i | μ_j, σ_j²)`.
+- **M-step:** updated the means, variances and mixing weights using the responsibilities as weights, where `N_k = Σ_i r_ik`: `μ_k = Σ r_ik · x_i / N_k`, `σ_k² = Σ r_ik · (x_i − μ_k)² / N_k`, `π_k = N_k / N`.
+- **Stopping rule:** computed the log-likelihood after every update and stopped when it changed by less than 1e-6. EM never lowers it.
+- Kept the code modular (DRY). One function, `weighted_components`, computes `π_k · N(x | μ_k, σ_k²)` and is reused by the log-likelihood, the E-step and the classifier.
+
+## Tracking Table
+| Iteration | μ1 (Children) | μ2 (Parent) | σ1² | σ2² | π1 | π2 | Log-Likelihood |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 (Initialization) | 70.2000 | 65.0000 | 12.1720 | 12.1720 | 0.5000 | 0.5000 | -1861.4779 |
+| 1 | 69.5172 | 65.7391 | 7.6412 | 9.6136 | 0.5112 | 0.4888 | -1825.3628 |
+| 2 | 69.5443 | 65.6961 | 7.1496 | 9.8663 | 0.5131 | 0.4869 | -1824.6039 |
+
+The log-likelihood jumps by about 36 in the first step and by less than 1 in the second. This is the expected pattern, a big early improvement and then a flattening curve. EM converged after 414 iterations at μ = [69.96, 65.14], σ² = [5.40, 7.49] and π = [0.53, 0.47].
+
+## Live Classification
+For any test height, the model returns exact posterior probabilities using the learned parameters. For a height of 66.0 inches:
+
+| Group | Posterior |
+| :--- | ---: |
+| P(Child \| 66.0) | 0.2434 (24.34%) |
+| P(Parent \| 66.0) | 0.7566 (75.66%) |
+
+The two probabilities always add up to 1. Short heights are almost certainly one group and tall heights the other, while heights near the overlap, such as 67 inches (P(Child) = 0.42), are split between the two.
+
+## Should we just split at the global mean?
+No. The global mean of our data is 67.67 inches. A hard cut there fails for three reasons:
+
+1. **It ignores overlap.** Mothers and sons overlap between roughly 64 and 70 inches. A hard cut labels a 67 inch person next to the line with the same certainty as a 55 or 78 inch person.
+2. **Each pile is a sliced bell curve.** The lower pile loses its upper tail and the upper pile loses its lower tail, so averaging a pile gives a biased mean. EM uses every point with a probability weight, so nothing is cut off.
+3. **It gives no uncertainty and learns nothing else.** A cut only says left or right. EM also learns the variances and mixing weights and returns a soft assignment for every point.
+
+We measured this on our data instead of only claiming it. Used as a yes or no classifier, the mean split scored 0.805 and EM scored 0.813, so the accuracy is about the same. EM's advantage is not accuracy. It reports how sure it is, and 248 of 686 points (36%) have an EM confidence below 80%, while the mean split labels all of them with full certainty. Neither method recovers the true group means exactly, because the two groups overlap heavily.
+
+## Visualizations
+| Visualization 1 | Visualization 2 |
+| :---: | :---: |
+| <img src="./screenshots/unlabeled_pile_seen_in_the_model.png" width="500"> | <img src="./screenshots/EM_fit.png" width="500"> |
+| The unlabeled pile the model sees | The two learned Gaussians and their mixture |
+
+| Visualization 3 | Visualization 4 |
+| :---: | :---: |
+| <img src="./screenshots/25_iterations_and_likelihood_per_iteration.png" width="500"> | <img src="./screenshots/smooth_vs_cliff.png" width="500"> |
+| Log-likelihood per iteration | Soft assignment (smooth) vs hard cut (cliff) |
+
+| Visualization 5 |
+| :---: |
+| <img src="./screenshots/height_66.0_inch.png" width="500"> |
+| Posterior probabilities for a test height of 66.0 inches |
+
+## Limitations
+EM can only recover the groups as well as the two bell curves allow. Mothers and sons overlap heavily, so some heights are uncertain no matter how well the model fits. Using one gender of children is a modelling choice made to keep each group unimodal.
 
 <br></br>
 
@@ -48,6 +114,7 @@ These results describe associations in this dataset, not proof that a keyword ca
 
 Negation, sarcasm, and context can affect how a word is used, and exact matching does not include related word forms.
 
+<br></br>
 
 ## Part 3 : Gradient Descent 
 
